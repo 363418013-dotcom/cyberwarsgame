@@ -1027,6 +1027,22 @@ footer{font-size:11px!important;letter-spacing:.4px}
 @media(max-width:650px){header{justify-content:center}#gameTools{justify-content:center}#hud{justify-content:center}.mobile button{font-size:11px;padding:10px 4px}}
 
 
+/* BATTLE PASS MENU */
+.bp-summary{display:flex;justify-content:space-around;gap:12px;margin:14px 0 10px}
+.bp-summary>div{flex:1;padding:10px;background:linear-gradient(180deg,#315a78,#142b45);border:1px solid #6bb4d6;border-radius:5px;box-shadow:0 3px 0 #030914}
+.bp-summary b,.bp-summary small{display:block}
+.bp-summary b{font-size:22px;color:#ffe17a}
+.bp-summary small{font-size:10px;color:#c8e7f5}
+.bp-progress{height:14px;border:2px solid #a8dff1;background:#071322;margin:8px 0 4px;overflow:hidden}
+#bpProgressFill{height:100%;width:0;background:linear-gradient(90deg,#22c8ff,#ffe17a);transition:width .25s}
+#bpProgressText{font-size:11px;color:#bdeaff;margin-bottom:12px}
+.bp-track{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:7px;margin:12px 0 16px}
+.bp-tier{padding:9px 4px;min-height:88px;background:linear-gradient(180deg,#244560,#10243a);border:1px solid #5a9ab9;border-radius:4px;font-size:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.bp-tier strong{font-size:13px;color:#ffe17a}
+.bp-tier .bp-icon{font-size:22px}
+.bp-tier.unlocked{border:2px solid #b7ff6a;background:linear-gradient(180deg,#315c55,#16352f)}
+.bp-tier small{color:#c9e4f2}
+@media(max-width:520px){.bp-track{grid-template-columns:repeat(2,minmax(0,1fr))}.bp-tier{min-height:70px}}
 /* EARLY-2000s ARCADE CABINET LOOK */
 :root{
   color-scheme:dark;
@@ -1200,8 +1216,22 @@ footer{
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
         <button id="titlePlay">▶ CAMPAIGN MODE</button>
         <button id="arcadePlay" style="background:#ff4fd8;color:#160b24;box-shadow:0 0 18px #ff4fd855">♾ ARCADE MODE</button>
+        <button id="battlePassOpen">🏆 BATTLE PASS</button>
       </div>
       <p class="hint">PLAYER 1: WASD + F &nbsp; • &nbsp; PLAYER 2: ARROW KEYS + ENTER</p>
+    </div>
+    <div class="panel select-panel" id="battlePassPanel" style="display:none">
+      <h2>🏆 CYBER WARS BATTLE PASS</h2>
+      <p>THE ARCADE SEASON — EARN XP BY PLAYING CAMPAIGN AND ARCADE MODE. THIS PASS IS FREE!</p>
+      <div class="bp-summary">
+        <div><b id="bpTier">TIER 1</b><small>YOUR CURRENT TIER</small></div>
+        <div><b id="bpXp">0 XP</b><small>TOTAL SEASON XP</small></div>
+      </div>
+      <div class="bp-progress"><div id="bpProgressFill"></div></div>
+      <div id="bpProgressText">0 / 500 XP TO NEXT TIER</div>
+      <div class="bp-track" id="bpTrack"></div>
+      <p class="hint">XP is saved on this device. Complete runs to earn more. No purchase required.</p>
+      <button id="battlePassBack">◀ BACK TO MAIN MENU</button>
     </div>
     <div class="panel select-panel" id="selectionPanel">
       <h2 id="ovTitle">⚡ CYBER WARS</h2>
@@ -1261,7 +1291,7 @@ footer{
       <div class="cw-warning-ticker">/// WARNING /// ROBOT FORCES DETECTED /// WARNING ///</div>
       <button class="skip-intro" id="skipIntro">SKIP CINEMATIC <span>▶</span></button>
       <div class="cw-city">
-        <span class="cw-cityname">N E O N&nbsp; C I T Y</span>
+        <span class="cw-cityname">NEON CITY</span>
         <i style="--h:65%"></i><i style="--h:90%"></i><i style="--h:73%"></i>
         <i style="--h:100%"></i><i style="--h:58%"></i><i style="--h:82%"></i>
         <i style="--h:69%"></i><i style="--h:94%"></i><i style="--h:77%"></i><i style="--h:88%"></i>
@@ -1330,6 +1360,40 @@ let player, player2, bots, bullets, packs, score, running=false, ended=false, la
 let levelIndex=0, levelTransition=false, barrels=[], barrelEffects=[];
 let factoryPhase='inactive', factoryMachines=[], factoryBlastTimer=0;
 let gameMode='campaign', arcadeWave=1, arcadeIntermission=0;
+let battlePassXP=0, battlePassAwarded=false;
+const BATTLE_PASS_REWARDS=[
+ ['🪙','Bronze Byte','Profile badge'],['⚡','Static Shock','Player title'],
+ ['🛡️','Shield Runner','Profile badge'],['🎮','Arcade Ace','Player title'],
+ ['💠','Neon Core','Profile badge'],['🚀','Hyper Drive','Player title'],
+ ['🤖','Bot Buster','Profile badge'],['🌌','Star Circuit','Player title'],
+ ['👑','Cyber Champion','Profile badge'],['🏆','Legend of Neon','Season title']
+];
+try{battlePassXP=Math.max(0,Number(localStorage.getItem('cyberWarsBattlePassXP'))||0);}catch(e){battlePassXP=0;}
+function renderBattlePass(){
+ const tier=Math.min(10,Math.floor(battlePassXP/500)+1);
+ const into=battlePassXP%500;
+ const fill=document.getElementById('bpProgressFill');
+ const tierText=document.getElementById('bpTier');
+ const xpText=document.getElementById('bpXp');
+ const progress=document.getElementById('bpProgressText');
+ const track=document.getElementById('bpTrack');
+ if(!fill||!tierText||!xpText||!progress||!track)return;
+ tierText.textContent=tier>=10&&battlePassXP>=5000?'MAX TIER':'TIER '+tier;
+ xpText.textContent=battlePassXP.toLocaleString()+' XP';
+ fill.style.width=(tier>=10&&battlePassXP>=5000?100:into/5)+'%';
+ progress.textContent=tier>=10&&battlePassXP>=5000?'ALL 10 TIERS COMPLETE!':into+' / 500 XP TO NEXT TIER';
+ track.innerHTML=BATTLE_PASS_REWARDS.map((r,i)=>'<div class="bp-tier '+(battlePassXP>=(i+1)*500?'unlocked':'')+'"><strong>TIER '+(i+1)+'</strong><span class="bp-icon">'+r[0]+'</span><b>'+r[1]+'</b><small>'+(battlePassXP>=(i+1)*500?'UNLOCKED':r[2])+'</small></div>').join('');
+}
+function openBattlePass(){
+ titlePanel.style.display='none';selectionPanel.style.display='none';
+ const bp=document.getElementById('battlePassPanel');if(bp)bp.style.display='block';
+ renderBattlePass();
+}
+document.getElementById('battlePassOpen').addEventListener('click',openBattlePass);
+document.getElementById('battlePassBack').addEventListener('click',()=>{
+ document.getElementById('battlePassPanel').style.display='none';titlePanel.style.display='block';
+});
+
 const LEVELS=[
  {name:'NEON CITY',subtitle:'DOWNTOWN NEON DISTRICT',boss:'TITAN CORE',sky:'#09091d',ground:'#17172e',grid:'#ff36d7',accent:'#31eaff',detail:'#ff36d7',kind:'city'},
  {name:'CYBER FOREST',subtitle:'GLITCHWOOD FOREST',boss:'ROOT REAPER',sky:'#071b1b',ground:'#102d29',grid:'#35ff83',accent:'#b7ff6a',detail:'#ffcf4a',kind:'forest'},
@@ -1372,7 +1436,8 @@ let mouse={x:W/2+100,y:H/2,down:false};
 const rand=(a,b)=>a+Math.random()*(b-a);
 const dist=(a,b)=>Math.hypot(a.x-b.x,a.y-b.y);
 let selectedLevelIndex=0;
-function reset(){ levelIndex=selectedLevelIndex; levelTransition=false; arcadeWave=1; arcadeIntermission=0; startLevel(false); }
+function reset(){
+ battlePassAwarded=false; levelIndex=selectedLevelIndex; levelTransition=false; arcadeWave=1; arcadeIntermission=0; startLevel(false); }
 function startLevel(keepScore){
  player={x:W/2-28,y:H/2,r:15,hp:100,armor:50,ammo:30,angle:0,cool:0,inv:0,character:selectedCharacter,dead:false};
  player2={x:W/2+28,y:H/2,r:15,hp:100,armor:50,ammo:30,angle:Math.PI,cool:0,inv:0,character:'dog',dead:false};
@@ -1806,6 +1871,14 @@ startBtn.addEventListener('click',()=>{
  else reset();
 });
 function end(win){
+ if(!battlePassAwarded){
+  const earned=Math.max(25,Math.floor(score/10));
+  battlePassXP+=earned;battlePassAwarded=true;
+  try{localStorage.setItem('cyberWarsBattlePassXP',String(battlePassXP));}catch(e){}
+  const oldText=ovText.textContent;
+  ovText.textContent=oldText+' BATTLE PASS: +'+earned+' XP EARNED!';
+ }
+
  running=false;ended=true;overlay.classList.remove('hidden');
  ovTitle.textContent=win?'🏆 Victory!':'💥 GAME OVER';
  ovText.textContent=gameMode==='arcade'
