@@ -1665,6 +1665,11 @@ function end(win){
  levelTransition=false;
  startBtn.textContent=gameMode==='arcade'?'RETRY ARCADE RUN ↻':'PLAY AGAIN';
 }
+function fireFor(shooter,owner){
+  const human=shooter.character==='human',rocker=shooter.character==='chromeRiot',a=shooter.angle;
+  bullets.push({x:shooter.x+Math.cos(a)*25,y:shooter.y+Math.sin(a)*25,vx:Math.cos(a)*(human?490:rocker?540:610),vy:Math.sin(a)*(human?490:rocker?540:610),r:human?8:rocker?7:5,life:1.15,blaster:true,special:human||rocker,damage:characterData[shooter.character].damage,owner});
+  shooter.ammo--;shooter.cool=.18;
+ }
 function update(dt){
  if(!running)return;
  if(factoryPhase==='exploding'){factoryBlastTimer+=dt;if(factoryBlastTimer>=5){factoryPhase='done';end(true);}return;}
@@ -1767,11 +1772,6 @@ function update(dt){
   const targets=[...bots,...(boss?[boss]:[]),...(factoryPhase==='machines'?factoryMachines.filter(m=>!m.destroyed):[])].filter(t=>t.hp>0);
   if(targets.length){const target=targets.reduce((best,t)=>dist(player2,t)<dist(player2,best)?t:best,targets[0]);player2.angle=Math.atan2(target.y-player2.y,target.x-player2.x);}
   fireFor(player2,2);
- }
- function fireFor(shooter,owner){
-  const human=shooter.character==='human',rocker=shooter.character==='chromeRiot',a=shooter.angle;
-  bullets.push({x:shooter.x+Math.cos(a)*25,y:shooter.y+Math.sin(a)*25,vx:Math.cos(a)*(human?490:rocker?540:610),vy:Math.sin(a)*(human?490:rocker?540:610),r:human?8:rocker?7:5,life:1.15,blaster:true,special:human||rocker,damage:characterData[shooter.character].damage,owner});
-  shooter.ammo--;shooter.cool=.18;
  }
  bullets.forEach(b=>{b.x+=b.vx*dt;b.y+=b.vy*dt;b.life-=dt;});
  bullets=bullets.filter(b=>b.life>0&&b.x>-10&&b.x<W+10&&b.y>-10&&b.y<H+10);
