@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://363418013-dotcom.github.io/cyberwarsgame/sitemap.xml
