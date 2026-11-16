@@ -1442,6 +1442,11 @@ function startLevel(keepScore){
  player={x:W/2-28,y:H/2,r:15,hp:100,armor:50,ammo:30,angle:0,cool:0,inv:0,character:selectedCharacter,dead:false};
  player2={x:W/2+28,y:H/2,r:15,hp:100,armor:50,ammo:30,angle:Math.PI,cool:0,inv:0,character:'dog',dead:false};
  dropState='ship'; dropTimer=0; shipX=-140; shipY=115;
+ // Clear stale cinematic/result panels before starting the next level.
+ const intro=document.getElementById('introScene');if(intro)intro.classList.remove('active');
+ const battlePass=document.getElementById('battlePassPanel');if(battlePass)battlePass.style.display='none';
+ const pause=document.querySelector('.cw-pause');if(pause)pause.style.display='none';
+ titlePanel.style.display='none';selectionPanel.style.display='block';
  bots=[]; bullets=[]; packs=[]; boss=null; bossSpawned=false; spawnTimer=0;
  barrels=[]; barrelEffects=[];
  factoryPhase=LEVELS[levelIndex].kind==='factoryAssault'?'enemies':'inactive';
@@ -1462,8 +1467,20 @@ function startLevel(keepScore){
  startBtn.textContent=gameMode==='arcade'?'START ARCADE RUN ▶':'DROP INTO THE MAP'; updateHud();
 }
 function nextLevel(){ if(levelIndex>=LEVELS.length-1){reset();return;} levelIndex++; startLevel(true); }
+function showProgressOverlay(){
+ // Restore a visible, populated result panel whenever gameplay stops.
+ const intro=document.getElementById('introScene');
+ if(intro)intro.classList.remove('active');
+ const battlePass=document.getElementById('battlePassPanel');
+ if(battlePass)battlePass.style.display='none';
+ const pause=document.querySelector('.cw-pause');
+ if(pause)pause.style.display='none';
+ titlePanel.style.display='none';
+ selectionPanel.style.display='block';
+ overlay.classList.remove('hidden');
+}
 function levelCleared(){
- running=false; levelTransition=true; overlay.classList.remove('hidden');
+ running=false; levelTransition=true; showProgressOverlay();
  const next=LEVELS[levelIndex+1];
  ovTitle.textContent='★ LEVEL '+(levelIndex+1)+' CLEAR!';
  ovText.textContent='You defeated '+LEVELS[levelIndex].boss+'! Team score: '+score+'. '+(next?'Next destination: '+next.name+' — '+next.subtitle+'. Enemies are tougher, but both heroes are restored for the next drop.':'The campaign is complete!');
@@ -1871,7 +1888,7 @@ startBtn.addEventListener('click',()=>{
  else reset();
 });
 function end(win){
- running=false;ended=true;overlay.classList.remove('hidden');
+ running=false;ended=true;showProgressOverlay();
  ovTitle.textContent=win?'🏆 Victory!':'💥 GAME OVER';
  ovText.textContent=gameMode==='arcade'
   ?'ARCADE RUN OVER! Your team reached wave '+arcadeWave+' and scored '+score+'. Start another run and try to beat your record!'
