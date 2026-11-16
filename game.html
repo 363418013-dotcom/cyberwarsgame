@@ -1278,6 +1278,84 @@ footer{
 .homebase-activities button:hover{transform:translateY(-3px);filter:brightness(1.15)}
 @media(max-width:600px){.homebase-room{height:300px}.homebase-window{width:57%;height:48%}.homebase-sofa{left:22%;width:48%;height:72px}.homebase-arcade{right:3%;transform:scale(.72);transform-origin:bottom right}.homebase-coffee-table{left:39%;width:20%}.homebase-speaker-right{display:none}.homebase-wall-shelf{right:5%;width:24%}.homebase-neon-sign{right:4%;top:8%;font-size:7px}.homebase-plant-right{left:78%}}
 
+
+/* CYBER WARS — ARCADE QUALITY PASS */
+:root{
+  --cw-mint:#b7ff6a;--cw-cyan:#54ffe5;--cw-pink:#ff3bd8;
+  --cw-ink:#080313;--cw-panel:#100d27;
+}
+html{scroll-behavior:smooth}
+body{overflow-x:hidden}
+header{
+  position:relative;z-index:2;
+  padding:clamp(12px,2.5vw,22px) 16px 12px;
+  border-bottom:2px solid #54ffe566;
+  text-shadow:0 0 18px #54ffe522;
+}
+header:after{
+  content:"ARCADE NETWORK // ONLINE";
+  display:block;width:100%;margin-top:7px;
+  color:#54ffe5;font-size:9px;letter-spacing:3px;opacity:.72;
+}
+#hud{justify-content:center;gap:7px;margin:4px auto 12px;max-width:100%;padding:0 8px}
+.pill{
+  min-height:34px;display:inline-flex;align-items:center;justify-content:center;
+  padding:7px 11px;font-size:clamp(10px,1.5vw,13px);
+  border:1px solid #54ffe5aa;box-shadow:inset 0 0 12px #54ffe511,2px 2px 0 #05020b;
+  background:linear-gradient(180deg,#211b42,#100d27);
+}
+#wrap{filter:drop-shadow(0 12px 24px #0009)}
+canvas{background-color:#080817;outline:1px solid #ffffff18;outline-offset:3px}
+#overlay{backdrop-filter:blur(3px);padding:clamp(10px,2vw,24px)}
+.panel{
+  position:relative;max-width:min(790px,100%);
+  background:linear-gradient(145deg,#14102f 0%,#090817 100%)!important;
+  box-shadow:8px 8px 0 #05020b,0 0 24px #54ffe522!important;
+}
+.panel:before{
+  content:"";position:absolute;left:0;right:0;top:0;height:4px;
+  background:linear-gradient(90deg,var(--cw-mint),var(--cw-cyan),var(--cw-pink));
+}
+.panel p{line-height:1.65}
+button{min-height:42px;position:relative}
+button:focus-visible,.character:focus-visible,.level-choice:focus-visible{
+  outline:3px solid #ffe45c!important;outline-offset:4px;
+}
+button:disabled{opacity:.48;cursor:not-allowed;filter:grayscale(.6)}
+.character,.level-choice{
+  transition:transform .12s steps(2),filter .12s,box-shadow .12s;
+}
+.character:hover,.level-choice:hover{transform:translateY(-2px);filter:brightness(1.16)}
+.character.selected,.level-choice.selected{position:relative}
+#titlePanel{overflow:hidden}
+#titlePanel:after{
+  content:"INSERT COIN  •  PRESS START";
+  display:block;margin-top:15px;color:#ffe45c;font-size:10px;
+  letter-spacing:2px;animation:cw-coin-blink 1.2s steps(2) infinite;
+}
+@keyframes cw-coin-blink{50%{opacity:.25}}
+#selectionPanel{scrollbar-color:#54ffe5 #100d27;scrollbar-width:thin}
+#selectionPanel::-webkit-scrollbar{width:9px}
+#selectionPanel::-webkit-scrollbar-thumb{background:#54ffe5;border:2px solid #100d27}
+.mobile{gap:6px;padding:0 4px 8px}
+.mobile button{min-height:48px;font-size:12px}
+footer{opacity:.86;text-align:center}
+@media(max-width:620px){
+  header{justify-content:center;text-align:center}
+  #hud{gap:5px}
+  .pill{padding:6px 8px;font-size:10px}
+  #wrap{padding:0 5px}
+  #overlay{inset:0 5px}
+  .panel{padding:15px!important}
+  .character-grid{gap:6px}
+  .character{padding:8px 4px}
+  button{font-size:12px;padding:10px 12px}
+}
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*:before,*:after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
+}
+
 </style>
 </head>
 <body>
