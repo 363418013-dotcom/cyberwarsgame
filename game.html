@@ -1191,6 +1191,46 @@ footer{
   #wrap{filter:none}
   #wrap::after{inset:7px 15px!important}
 }
+ 
+/* HOME BASE: a separate, peaceful lounge screen that leaves gameplay untouched. */
+.homebase-panel{
+ width:min(900px,94vw)!important;max-height:90vh;overflow-y:auto;
+ background:linear-gradient(180deg,#142d45f5,#091727f8)!important;
+ border:3px solid #69e8df!important;border-radius:12px!important;
+ box-shadow:0 0 0 4px #07101c,0 0 35px #3ce8d888!important;
+ color:#eaffff!important;padding:clamp(14px,3vw,28px)!important;
+}
+.homebase-panel h2{margin:8px 0;color:#a5fff1!important;font-size:clamp(28px,5vw,44px)!important;text-shadow:0 0 15px #43e8dc!important}
+.homebase-topline{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;color:#78f6d8;font-size:11px;font-weight:900;letter-spacing:1.5px}
+.homebase-subtitle{color:#c0dce9;font-size:12px;letter-spacing:1px}
+.homebase-room{height:clamp(220px,38vh,330px);position:relative;overflow:hidden;border:2px solid #4f9ba9;border-radius:9px;background:linear-gradient(#172d51 0%,#3a3765 58%,#1b263d 59%,#101c2a 100%);box-shadow:inset 0 0 35px #050d22}
+.homebase-window{position:absolute;left:8%;top:9%;width:43%;height:57%;border:7px solid #263e5a;border-radius:7px;background:linear-gradient(#101c45,#604d86);box-shadow:0 0 0 2px #8ceeff55,0 0 22px #4ddff655;overflow:hidden}
+.homebase-window>span{position:absolute;bottom:7px;left:8px;color:#c8efff;font-size:9px;letter-spacing:1px}
+.homebase-moon{position:absolute;right:18%;top:13%;width:32px;height:32px;border-radius:50%;background:#fff0bd;box-shadow:0 0 22px #ffe9a8}
+.homebase-skyline{position:absolute;bottom:0;left:0;right:0;height:64%;display:flex;align-items:end;gap:3px}
+.homebase-skyline i{flex:1;height:var(--h,60%);background:linear-gradient(90deg,#152647,#263e67);border-top:2px solid #4de5f0;box-shadow:0 0 9px #3deaff66}
+.homebase-skyline i:nth-child(2n){height:85%;border-color:#e65bda}
+.homebase-skyline i:nth-child(3n){height:53%}
+.homebase-lamp{position:absolute;left:56%;top:17%;width:5px;height:48%;background:#263c54}
+.homebase-lamp:before{content:"";position:absolute;top:-7px;left:-19px;width:43px;height:19px;border-radius:50% 50% 5px 5px;background:#ffe69b;box-shadow:0 0 24px #ffd76b}
+.homebase-plant{position:absolute;left:4%;bottom:13%;width:48px;height:90px}
+.homebase-plant b{position:absolute;bottom:0;left:8px;width:33px;height:27px;background:#c36c48;clip-path:polygon(8% 0,92% 0,78% 100%,22% 100%)}
+.homebase-plant i{position:absolute;bottom:22px;left:20px;width:15px;height:40px;border-radius:100% 0 100% 0;background:#4cce9b;transform:rotate(-30deg);transform-origin:bottom}
+.homebase-plant i:nth-child(2){transform:rotate(30deg);left:7px;background:#72e6a8}
+.homebase-arcade{position:absolute;right:8%;bottom:12%;width:75px;height:126px;background:linear-gradient(90deg,#18253b,#405c7c,#17253a);border:3px solid #91c8df;border-radius:7px 7px 3px 3px;box-shadow:0 0 18px #6bdbff55}
+.homebase-arcade-screen{margin:10px 8px 5px;height:65px;background:#10152c;border:2px solid #52f3df;color:#ffe47b;font-size:12px;font-weight:900;line-height:17px;text-align:center;text-shadow:0 0 8px #ffca4a}
+.homebase-arcade-controls{color:#ff79d9;text-align:center;letter-spacing:8px}
+.homebase-sofa{position:absolute;z-index:2;left:31%;bottom:12%;width:34%;height:75px;border-radius:18px 18px 9px 9px;background:linear-gradient(#e66c9e,#9b3e78);border:4px solid #f4a5ca;box-shadow:0 9px 0 #48254b}
+.homebase-cushion{position:absolute;left:8%;top:7px;width:84%;height:40px;border-radius:12px;background:linear-gradient(120deg,#f5a6c7,#c45b91);border:2px solid #ffcae0}
+.homebase-seat{position:absolute;left:13%;bottom:5px;width:74%;height:20px;border-radius:8px;background:#71325e}
+.homebase-arm{position:absolute;left:-10px;top:15px;width:23px;height:50px;border-radius:9px;background:#f18bb6;border:2px solid #ffd0e3}
+.homebase-rug{position:absolute;left:22%;bottom:4%;width:54%;height:22px;border-radius:50%;background:#3b5e80;box-shadow:0 0 0 3px #7ba9c455}
+.homebase-floor{position:absolute;bottom:0;left:0;right:0;height:12%;background:repeating-linear-gradient(90deg,#172a3d 0 60px,#203951 61px 63px)}
+.homebase-neon-sign{position:absolute;right:12%;top:10%;color:#9dfff0;font-size:clamp(8px,1.5vw,13px);font-weight:900;letter-spacing:1px;text-shadow:0 0 7px #3fffe0,0 0 16px #3fffe0}
+.homebase-message{margin:14px auto;padding:12px;border:1px solid #397d8b;border-radius:7px;background:#0b1d2bdc;color:#d7f8f4;font-weight:700}
+.homebase-activities{display:flex;justify-content:center;flex-wrap:wrap;gap:9px;margin:12px 0}
+.homebase-activities button{background:linear-gradient(180deg,#5de6d3,#1c9c9a)!important;color:#062c36!important;border-color:#a9fff4!important}
+@media(max-width:600px){.homebase-sofa{left:25%;width:43%}.homebase-arcade{right:4%;transform:scale(.8);transform-origin:bottom right}.homebase-window{width:48%;left:5%}.homebase-neon-sign{right:7%;top:5%}}
 </style>
 </head>
 <body>
@@ -1217,8 +1257,31 @@ footer{
         <button id="titlePlay">▶ CAMPAIGN MODE</button>
         <button id="arcadePlay" style="background:#ff4fd8;color:#160b24;box-shadow:0 0 18px #ff4fd855">♾ ARCADE MODE</button>
         <button id="battlePassOpen">🏆 BATTLE PASS</button>
+        <button id="homeBaseOpen" style="background:#61e7d1;color:#082b36">🏠 HOME BASE</button>
       </div>
       <p class="hint">PLAYER 1: WASD + F &nbsp; • &nbsp; PLAYER 2: ARROW KEYS + ENTER</p>
+    </div>
+    <div class="panel homebase-panel" id="homeBasePanel" style="display:none">
+      <div class="homebase-topline"><span>● SAFE ZONE ONLINE</span><span>YOUR CREW HIDEOUT</span></div>
+      <h2>🏠 HOME BASE</h2>
+      <p class="homebase-subtitle">THE BATTLE CAN WAIT. THIS IS YOUR SPACE TO CHILL.</p>
+      <div class="homebase-room" aria-label="A cozy futuristic lounge with a city view, sofa, plant and arcade cabinet">
+        <div class="homebase-window"><div class="homebase-moon"></div><div class="homebase-skyline"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><span>NEON CITY • NIGHT</span></div>
+        <div class="homebase-lamp"></div>
+        <div class="homebase-plant"><i></i><i></i><i></i><b></b></div>
+        <div class="homebase-arcade"><div class="homebase-arcade-screen">★<br>CHILL<br>MODE</div><div class="homebase-arcade-controls">● ●</div></div>
+        <div class="homebase-sofa"><div class="homebase-cushion"></div><div class="homebase-seat"></div><div class="homebase-arm"></div></div>
+        <div class="homebase-rug"></div>
+        <div class="homebase-floor"></div>
+        <div class="homebase-neon-sign">REST • RECHARGE • REPEAT</div>
+      </div>
+      <div class="homebase-message" id="homeBaseMessage">No missions. No pressure. Just you, the neon skyline, and a quiet moment.</div>
+      <div class="homebase-activities">
+        <button type="button" data-homebase-message="The city lights are glowing outside. Take a moment and enjoy the view.">🌃 CITY VIEW</button>
+        <button type="button" data-homebase-message="The arcade cabinet is on free-play. No scores, no rush — just vibes.">🕹️ ARCADE CORNER</button>
+        <button type="button" data-homebase-message="Your crew's comfy sofa is all yours. Recharge before the next adventure.">🛋️ LOUNGE TIME</button>
+      </div>
+      <button id="homeBaseBack">◀ BACK TO MAIN MENU</button>
     </div>
     <div class="panel select-panel" id="battlePassPanel" style="display:none">
       <h2>🏆 CYBER WARS BATTLE PASS</h2>
@@ -1386,10 +1449,29 @@ function renderBattlePass(){
 }
 function openBattlePass(){
  titlePanel.style.display='none';selectionPanel.style.display='none';
+ const home=document.getElementById('homeBasePanel');if(home)home.style.display='none';
  const bp=document.getElementById('battlePassPanel');if(bp)bp.style.display='block';
  renderBattlePass();
 }
+function openHomeBase(){
+ running=false;
+ titlePanel.style.display='none';selectionPanel.style.display='none';
+ const bp=document.getElementById('battlePassPanel');if(bp)bp.style.display='none';
+ const home=document.getElementById('homeBasePanel');if(home)home.style.display='block';
+ overlay.classList.remove('hidden');
+ const msg=document.getElementById('homeBaseMessage');
+ if(msg)msg.textContent='No missions. No pressure. Just you, the neon skyline, and a quiet moment.';
+}
 document.getElementById('battlePassOpen').addEventListener('click',openBattlePass);
+document.getElementById('homeBaseOpen').addEventListener('click',openHomeBase);
+document.getElementById('homeBaseBack').addEventListener('click',()=>{
+ const home=document.getElementById('homeBasePanel');if(home)home.style.display='none';
+ titlePanel.style.display='block';selectionPanel.style.display='none';
+});
+document.querySelectorAll('[data-homebase-message]').forEach(btn=>btn.addEventListener('click',()=>{
+ const msg=document.getElementById('homeBaseMessage');
+ if(msg)msg.textContent=btn.dataset.homebaseMessage;
+}));
 document.getElementById('battlePassBack').addEventListener('click',()=>{
  document.getElementById('battlePassPanel').style.display='none';titlePanel.style.display='block';
 });
