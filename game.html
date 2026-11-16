@@ -1734,7 +1734,7 @@ function drawRetroMap(){
  if(k==='forest'){
   ctx.fillStyle='#071b18';ctx.fillRect(0,100,W,190);
   for(let i=0;i<20;i++){const x=i*53-10,y=155+(i*37)%85,r=25+i%3*8;ctx.fillStyle=i%2?'#14523a':'#0d392d';ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();}
- }else if(k==='factory||k==='factoryAssault'){
+ }else if(k==='factory'||k==='factoryAssault'){
   ctx.fillStyle='#160e19';ctx.fillRect(0,100,W,195);
   for(let i=0;i<7;i++){const x=25+i*145,h=72+i%3*25;ctx.fillStyle='#29202d';ctx.fillRect(x,205-h,32,h);ctx.fillStyle='#ff8b3d';ctx.fillRect(x+5,210-h,22,5);ctx.globalAlpha=.2;ctx.fillStyle='#bd6b52';ctx.beginPath();ctx.arc(x+16,170-h,25,0,Math.PI*2);ctx.fill();ctx.globalAlpha=1;}
   ctx.fillStyle='#30202b';ctx.fillRect(0,230,W,55);ctx.fillStyle='#ff8b3d';ctx.fillRect(0,230,W,4);
