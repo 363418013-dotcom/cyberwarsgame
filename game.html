@@ -1871,19 +1871,17 @@ startBtn.addEventListener('click',()=>{
  else reset();
 });
 function end(win){
- if(!battlePassAwarded){
-  const earned=Math.max(25,Math.floor(score/10));
-  battlePassXP+=earned;battlePassAwarded=true;
-  try{localStorage.setItem('cyberWarsBattlePassXP',String(battlePassXP));}catch(e){}
-  const oldText=ovText.textContent;
-  ovText.textContent=oldText+' BATTLE PASS: +'+earned+' XP EARNED!';
- }
-
  running=false;ended=true;overlay.classList.remove('hidden');
  ovTitle.textContent=win?'🏆 Victory!':'💥 GAME OVER';
  ovText.textContent=gameMode==='arcade'
   ?'ARCADE RUN OVER! Your team reached wave '+arcadeWave+' and scored '+score+'. Start another run and try to beat your record!'
   :win?'CAMPAIGN COMPLETE! Both heroes defeated IRON TYRANT MK-X, destroyed every production machine, and blew up the factory! Final Team Score: '+score:'Both teammates are down. Team Score: '+score+'. Try again together!';
+ if(!battlePassAwarded){
+  const earned=Math.max(25,Math.floor(score/10));
+  battlePassXP+=earned;battlePassAwarded=true;
+  try{localStorage.setItem('cyberWarsBattlePassXP',String(battlePassXP));}catch(e){}
+  ovText.textContent+=' BATTLE PASS: +'+earned+' XP EARNED!';
+ }
  levelTransition=false;
  startBtn.textContent=gameMode==='arcade'?'RETRY ARCADE RUN ↻':'PLAY AGAIN';
 }
