@@ -1408,6 +1408,17 @@ footer{opacity:.86;text-align:center}
  #introScene .cw-caption{font-size:11px;padding:8px}
 }
 
+
+/* NOVACORE STUDIOS opening publisher card */
+#novacoreSplash{position:absolute;inset:0;z-index:60;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:clamp(12px,3vh,28px);padding:5%;background:radial-gradient(ellipse at 50% 45%,#17265a 0%,#080b20 52%,#02040d 100%);opacity:0;pointer-events:none;transition:opacity .55s ease}
+#novacoreSplash.visible{opacity:1;pointer-events:auto}
+#novacoreSplash img{display:block;width:min(78%,680px);max-height:62%;object-fit:contain;filter:drop-shadow(0 0 22px #28dfff88);animation:novaLogoIn 1.1s cubic-bezier(.2,.8,.2,1) both}
+#novacoreSplash .nova-presents{font-family:"Courier New",monospace;font-weight:900;font-size:clamp(15px,2.5vw,27px);letter-spacing:clamp(3px,.8vw,9px);color:#eaffff;text-shadow:0 0 14px #35eaff,3px 3px #7b35c9;animation:novaTextIn .8s .45s both}
+#novacoreSplash .nova-game-title{font-family:"Courier New",monospace;font-weight:1000;font-size:clamp(30px,7vw,76px);letter-spacing:clamp(3px,1vw,12px);color:#fff;text-shadow:0 0 12px #35eaff,0 0 34px #a53cff,5px 5px #ec35b5;animation:novaTextIn .8s .9s both}
+@keyframes novaLogoIn{from{opacity:0;transform:translateY(22px) scale(.88)}to{opacity:1;transform:translateY(0) scale(1)}}
+@keyframes novaTextIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){#novacoreSplash *{animation:none!important}}
+
 </style>
 </head>
 <body>
@@ -1516,6 +1527,11 @@ footer{opacity:.86;text-align:center}
     </div>
 
     <div id="introScene" aria-label="Cyber Wars cinematic: the invasion of Neon City and the hero's arrival">
+      <div id="novacoreSplash" aria-label="NovaCore Studios presents Cyber Wars">
+        <img src="novacore-studios-logo.svg" alt="NovaCore Studios logo">
+        <div class="nova-presents">NOVACORE STUDIOS PRESENTS</div>
+        <div class="nova-game-title">CYBER WARS!</div>
+      </div>
       <div class="cw-stars"></div>
       <div class="cw-skyline-haze"></div>
       <div class="cw-alert"></div>
@@ -2142,31 +2158,41 @@ function startOpeningCutscene(){
  if(hero&&chosen)hero.textContent=chosen.emoji;
  if(heroName&&chosen)heroName.textContent=chosen.name.toUpperCase()+' // HERO UNIT CONFIRMED';
  titlePanel.style.display='none';selectionPanel.style.display='none';
+ const splash=document.getElementById('novacoreSplash');
  scene.classList.remove('active');void scene.offsetWidth;scene.classList.add('active');
- playCinematicScore();
- const lines=[
-  [0,'SYSTEM BOOT // NEON CITY DEFENCE NETWORK ONLINE…'],
-  [1650,'CITY ALERT: OUTER SHIELD OFFLINE. ALL DISTRICTS REQUESTING HELP.'],
-  [3450,'COMMAND: EVACUATION ROUTES ARE BLOCKED. CIVILIANS ARE IN THE SAFE ZONES.'],
-  [5250,'WARNING: HOSTILE DROPSHIPS ENTERING SECTOR 07.'],
-  [7100,'TACTICAL FEED: SCOUT DRONES LEADING THE ROBOT ADVANCE.'],
-  [9000,'SCANNING FOR FRIENDLY SIGNAL… ONE HERO UNIT DETECTED.'],
-  [10800,'PILOT: NEON CITY, I HEAR YOU. I’M COMING IN!'],
-  [12600,'DROP POD RELEASED // HERO UNIT DESCENDING.'],
-  [14400,'LANDING CONFIRMED. CYBER WARRIOR ONLINE.'],
-  [16000,'MISSION 01 // DEFEND NEON CITY. LET’S MOVE!']
- ];
- lines.forEach(([delay,message])=>setTimeout(()=>{
-  if(scene.classList.contains('active')&&caption)caption.textContent=message;
- },delay));
+ if(splash){splash.classList.remove('visible');void splash.offsetWidth;splash.classList.add('visible');}
+ let finishTimer=null;
+ const beginCinematic=()=>{
+  if(!scene.classList.contains('active'))return;
+  if(splash)splash.classList.remove('visible');
+  playCinematicScore();
+  const lines=[
+   [0,'SYSTEM BOOT // NEON CITY DEFENCE NETWORK ONLINE…'],
+   [1650,'CITY ALERT: OUTER SHIELD OFFLINE. ALL DISTRICTS REQUESTING HELP.'],
+   [3450,'COMMAND: EVACUATION ROUTES ARE BLOCKED. CIVILIANS ARE IN THE SAFE ZONES.'],
+   [5250,'WARNING: HOSTILE DROPSHIPS ENTERING SECTOR 07.'],
+   [7100,'TACTICAL FEED: SCOUT DRONES LEADING THE ROBOT ADVANCE.'],
+   [9000,'SCANNING FOR FRIENDLY SIGNAL… ONE HERO UNIT DETECTED.'],
+   [10800,'PILOT: NEON CITY, I HEAR YOU. I’M COMING IN!'],
+   [12600,'DROP POD RELEASED // HERO UNIT DESCENDING.'],
+   [14400,'LANDING CONFIRMED. CYBER WARRIOR ONLINE.'],
+   [16000,'MISSION 01 // DEFEND NEON CITY. LET’S MOVE!']
+  ];
+  lines.forEach(([delay,message])=>setTimeout(()=>{
+   if(scene.classList.contains('active')&&caption)caption.textContent=message;
+  },delay));
+  finishTimer=setTimeout(finish,18100);
+ };
  const finish=()=>{
   if(introTimer!==null){clearTimeout(introTimer);introTimer=null;}
+  if(finishTimer!==null){clearTimeout(finishTimer);finishTimer=null;}
   stopCinematicScore();
+  if(splash)splash.classList.remove('visible');
   scene.classList.remove('active');
   reset();
  };
  document.getElementById('skipIntro').onclick=finish;
- introTimer=setTimeout(finish,18100);
+ introTimer=setTimeout(beginCinematic,3600);
 }
 
 startBtn.addEventListener('click',()=>{
