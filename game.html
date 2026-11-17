@@ -1465,6 +1465,10 @@ footer{opacity:.86;text-align:center}
 @media(prefers-reduced-motion:reduce){#introScene .cw-cinematic-layer *{animation-duration:.01ms!important;animation-iteration-count:1!important}}
 
 
+
+/* Cinematic flight direction fix: face the helicopter along its left-to-right flight path. */
+#introScene .cw-dropship{transform:scaleX(-1);}
+
 /* NOVACORE WORLD-WIDE VISUAL POLISH PASS — presentation only; gameplay logic unchanged */
 :root{--cw-cyan:#67f4ff;--cw-pink:#ff62cf;--cw-gold:#ffe28a;--cw-panel:#0b1930}
 header{width:min(1120px,100%);padding:16px 20px 10px;gap:14px}
