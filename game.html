@@ -1419,6 +1419,51 @@ footer{opacity:.86;text-align:center}
 @keyframes novaTextIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(prefers-reduced-motion:reduce){#novacoreSplash *{animation:none!important}}
 
+
+/* BIG-SCREEN OPENING CINEMATIC UPGRADE — isolated to the intro scene */
+#introScene{overflow:hidden;perspective:900px}
+#introScene .cw-cinematic-layer{position:absolute;inset:0;z-index:5;pointer-events:none;overflow:hidden}
+#introScene .cw-blackout{position:absolute;inset:0;background:#02030b;opacity:0;z-index:2}
+#introScene[data-phase="blackout"] .cw-blackout{animation:cw-blackout .95s ease-out forwards}
+#introScene .cw-city-surge{position:absolute;z-index:3;left:0;right:0;bottom:18%;height:42%;opacity:0;background:linear-gradient(0deg,#ff315f66,transparent 75%);mix-blend-mode:screen}
+#introScene[data-phase="invasion"] .cw-city-surge{animation:cw-surge 2.2s ease-out both}
+#introScene .cw-titan-silhouette{position:absolute;z-index:4;right:-28%;bottom:17%;width:clamp(150px,27vw,300px);height:clamp(210px,36vw,390px);opacity:0;transform:translateX(0) scale(.7);filter:drop-shadow(0 0 24px #ff315f88)}
+#introScene .cw-titan-silhouette:before{content:"";position:absolute;left:20%;right:20%;top:18%;height:43%;background:linear-gradient(110deg,#141b34,#59617b 45%,#151a31);clip-path:polygon(18% 0,82% 0,100% 28%,88% 100%,12% 100%,0 28%);border:3px solid #ff526f}
+#introScene .cw-titan-silhouette:after{content:"";position:absolute;left:7%;right:7%;bottom:0;height:49%;background:linear-gradient(90deg,#11182d,#59617b 48%,#11182d);clip-path:polygon(18% 0,82% 0,100% 100%,65% 85%,50% 100%,35% 85%,0 100%)}
+#introScene .titan-eye{position:absolute;z-index:2;top:32%;left:42%;width:16%;height:5%;background:#ff234e;box-shadow:0 0 24px 9px #ff234e;animation:cw-eye 1s infinite alternate}
+#introScene .titan-core{position:absolute;z-index:3;top:53%;left:40%;width:20%;aspect-ratio:1;border-radius:50%;background:#ffcf63;box-shadow:0 0 10px 5px #ff8d39,0 0 32px 12px #ff315f88}
+#introScene .titan-arm{position:absolute;z-index:1;top:44%;left:0;width:30%;height:45%;background:linear-gradient(90deg,#10162c,#68718b,#171c35);clip-path:polygon(20% 0,100% 10%,78% 100%,0 75%)}
+#introScene[data-phase="invasion"] .cw-titan-silhouette{animation:cw-titan-rise 2.4s cubic-bezier(.15,.7,.2,1) forwards}
+#introScene .cw-debris{position:absolute;z-index:8;inset:0;opacity:0}
+#introScene .cw-debris i{position:absolute;top:-8%;left:var(--x);width:5px;height:18px;background:#ffcf63;box-shadow:0 0 12px #ff526f;transform:rotate(25deg)}
+#introScene .cw-debris i:nth-child(1){--x:12%}.cw-debris i:nth-child(2){--x:24%}.cw-debris i:nth-child(3){--x:39%}.cw-debris i:nth-child(4){--x:53%}.cw-debris i:nth-child(5){--x:68%}.cw-debris i:nth-child(6){--x:77%}.cw-debris i:nth-child(7){--x:88%}.cw-debris i:nth-child(8){--x:95%}
+#introScene[data-phase="invasion"] .cw-debris{opacity:1}
+#introScene[data-phase="invasion"] .cw-debris i{animation:cw-fall 2.5s linear infinite}
+#introScene .cw-hero-beam{position:absolute;z-index:8;left:50%;top:0;width:2px;height:0;transform:translateX(-50%);background:#8dfbff;box-shadow:0 0 30px 13px #35eaff88}
+#introScene[data-phase="hero"] .cw-hero-beam{animation:cw-hero-beam 1.25s ease-out both}
+#introScene[data-phase="hero"] .cw-titan-silhouette{animation:cw-titan-retreat 1s ease-in forwards}
+#introScene[data-phase="hero"] .cw-landing-ring{animation:cw-ring-impact 1.1s .7s ease-out both}
+#introScene .cw-mission-flash{position:absolute;z-index:18;left:50%;top:43%;transform:translate(-50%,-50%) scale(1.6);opacity:0;padding:10px 24px;border:2px solid #b7ff6a;background:#07111df2;color:#b7ff6a;font-weight:1000;font-size:clamp(20px,4vw,42px);letter-spacing:5px;text-shadow:3px 3px #f04aa8;box-shadow:0 0 35px #35eaff88}
+#introScene[data-phase="mission"] .cw-mission-flash{animation:cw-mission .85s ease-out both}
+#introScene[data-phase="mission"] .cw-hero-title{animation:cw-title .8s .15s forwards}
+#introScene[data-phase="mission"] .cw-caption-wrap{animation:cw-caption-pop .5s ease-out both}
+#introScene[data-phase="mission"] .cw-alert{animation:cw-alert .65s 3}
+#introScene[data-phase="hero"] .cw-hero{animation:cw-hero-impact 1.1s cubic-bezier(.15,.8,.2,1) forwards}
+#introScene[data-phase="hero"] .cw-hero-name{animation:cw-name-reveal .7s .65s both}
+@keyframes cw-blackout{0%{opacity:0}25%{opacity:.96}65%{opacity:.75}100%{opacity:0}}
+@keyframes cw-surge{0%{opacity:0}25%{opacity:1}100%{opacity:.15}}
+@keyframes cw-titan-rise{0%{opacity:0;transform:translateX(0) scale(.7)}20%{opacity:1}100%{opacity:1;transform:translateX(-115%) scale(1)}}
+@keyframes cw-titan-retreat{to{opacity:0;transform:translateX(70%) scale(.8)}}
+@keyframes cw-eye{to{opacity:.35;filter:brightness(2)}}
+@keyframes cw-fall{to{transform:translate(70px,115vh) rotate(190deg);opacity:0}}
+@keyframes cw-hero-beam{0%{height:0;opacity:0}25%{height:95%;opacity:1}100%{height:0;opacity:0}}
+@keyframes cw-ring-impact{0%{opacity:0;transform:translateX(-50%) scale(.2)}35%{opacity:1}100%{opacity:0;transform:translateX(-50%) scale(1.8)}}
+@keyframes cw-hero-impact{0%{opacity:0;transform:translate(-50%,55px) scale(.35)}65%{opacity:1;transform:translate(-50%,-10px) scale(1.12)}100%{opacity:1;transform:translate(-50%,0) scale(1)}}
+@keyframes cw-name-reveal{from{opacity:0;letter-spacing:12px;filter:blur(8px)}to{opacity:1;letter-spacing:3px;filter:blur(0)}}
+@keyframes cw-mission{0%{opacity:0;transform:translate(-50%,-50%) scale(1.8)}20%{opacity:1}75%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(.92)}}
+@keyframes cw-caption-pop{from{opacity:0;transform:translateY(25px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){#introScene .cw-cinematic-layer *{animation-duration:.01ms!important;animation-iteration-count:1!important}}
+
 </style>
 </head>
 <body>
@@ -1531,6 +1576,14 @@ footer{opacity:.86;text-align:center}
         <img src="novacore-studios-logo.svg" alt="NovaCore Studios logo">
         <div class="nova-presents">NOVACORE STUDIOS PRESENTS</div>
         <div class="nova-game-title">CYBER WARS!</div>
+      </div>
+      <div class="cw-cinematic-layer" aria-hidden="true">
+        <div class="cw-blackout"></div>
+        <div class="cw-city-surge"></div>
+        <div class="cw-titan-silhouette"><i class="titan-eye"></i><i class="titan-core"></i><i class="titan-arm"></i></div>
+        <div class="cw-debris"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="cw-hero-beam"></div>
+        <div class="cw-mission-flash">MISSION 01</div>
       </div>
       <div class="cw-stars"></div>
       <div class="cw-skyline-haze"></div>
@@ -2166,26 +2219,34 @@ function startOpeningCutscene(){
   if(!scene.classList.contains('active'))return;
   if(splash)splash.classList.remove('visible');
   playCinematicScore();
+  const phase=(name)=>{if(scene.classList.contains('active'))scene.dataset.phase=name;};
+  const cinematicTimers=[];
+  const cue=(delay,fn)=>cinematicTimers.push(setTimeout(()=>{if(scene.classList.contains('active'))fn();},delay));
   const lines=[
    [0,'SYSTEM BOOT // NEON CITY DEFENCE NETWORK ONLINE…'],
-   [1650,'CITY ALERT: OUTER SHIELD OFFLINE. ALL DISTRICTS REQUESTING HELP.'],
-   [3450,'COMMAND: EVACUATION ROUTES ARE BLOCKED. CIVILIANS ARE IN THE SAFE ZONES.'],
-   [5250,'WARNING: HOSTILE DROPSHIPS ENTERING SECTOR 07.'],
-   [7100,'TACTICAL FEED: SCOUT DRONES LEADING THE ROBOT ADVANCE.'],
-   [9000,'SCANNING FOR FRIENDLY SIGNAL… ONE HERO UNIT DETECTED.'],
-   [10800,'PILOT: NEON CITY, I HEAR YOU. I’M COMING IN!'],
-   [12600,'DROP POD RELEASED // HERO UNIT DESCENDING.'],
-   [14400,'LANDING CONFIRMED. CYBER WARRIOR ONLINE.'],
-   [16000,'MISSION 01 // DEFEND NEON CITY. LET’S MOVE!']
+   [1500,'CITY ALERT: OUTER SHIELD OFFLINE. ALL DISTRICTS REQUESTING HELP.'],
+   [3200,'COMMAND: EVACUATION ROUTES ARE BLOCKED. CIVILIANS ARE SECURE IN THE SHELTERS.'],
+   [5100,'WARNING: HOSTILE DROPSHIPS ENTERING SECTOR 07.'],
+   [6900,'TACTICAL FEED: UNKNOWN TITAN-CLASS MACHINE DETECTED IN THE SMOKE.'],
+   [8700,'SCANNING FOR FRIENDLY SIGNAL… ONE HERO UNIT DETECTED.'],
+   [10500,'PILOT: NEON CITY, I HEAR YOU. HOLD ON!'],
+   [12300,'DROP POD RELEASED // HERO UNIT DESCENDING.'],
+   [14100,'LANDING CONFIRMED. CYBER WARRIOR ONLINE.'],
+   [15800,'THREAT LEVEL: EXTREME. HERO UNIT LOCKED ON TARGET.'],
+   [17400,'MISSION 01 // DEFEND NEON CITY. LET’S MOVE!']
   ];
-  lines.forEach(([delay,message])=>setTimeout(()=>{
-   if(scene.classList.contains('active')&&caption)caption.textContent=message;
-  },delay));
-  finishTimer=setTimeout(finish,18100);
+  lines.forEach(([delay,message])=>cue(delay,()=>{if(caption)caption.textContent=message;}));
+  cue(1450,()=>phase('blackout'));
+  cue(5100,()=>phase('invasion'));
+  cue(10500,()=>phase('hero'));
+  cue(17400,()=>phase('mission'));
+  finishTimer=setTimeout(finish,20100);
  };
  const finish=()=>{
   if(introTimer!==null){clearTimeout(introTimer);introTimer=null;}
   if(finishTimer!==null){clearTimeout(finishTimer);finishTimer=null;}
+  if(typeof cinematicTimers!=='undefined')cinematicTimers.forEach(clearTimeout);
+  scene.removeAttribute('data-phase');
   stopCinematicScore();
   if(splash)splash.classList.remove('visible');
   scene.classList.remove('active');
