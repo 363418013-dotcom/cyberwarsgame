@@ -1469,6 +1469,20 @@ footer{opacity:.86;text-align:center}
 /* Cinematic flight direction fix: face the helicopter along its left-to-right flight path. */
 #introScene .cw-dropship{transform:scaleX(-1);}
 
+
+/* Custom futuristic vehicles for the opening cinematic — no emoji artwork. */
+#introScene .cw-carrier{width:clamp(76px,10vw,122px);height:54px;font-size:0;filter:drop-shadow(0 0 14px #ff4bd8)!important}
+#introScene .cw-carrier-hull{position:absolute;left:4%;right:4%;top:27%;height:48%;background:linear-gradient(180deg,#c6faff 0%,#526d9c 28%,#182442 72%,#0a1228 100%);border:2px solid #8dfbff;clip-path:polygon(0 50%,18% 20%,38% 0,72% 0,100% 50%,72% 100%,38% 100%,18% 80%);box-shadow:0 0 16px #54eaff}
+#introScene .cw-carrier-core{position:absolute;left:37%;top:35%;width:27%;height:25%;border-radius:50%;background:#ff72de;box-shadow:0 0 8px 4px #ff4bd8,0 0 22px 8px #ff4bd866}
+#introScene .cw-carrier-thruster{position:absolute;left:-10%;top:43%;width:22%;height:14%;background:#ff8bf0;box-shadow:0 0 12px 5px #ff4bd8}
+#introScene .cw-dropship{width:clamp(110px,15vw,170px);height:76px;font-size:0;transform:none!important;filter:drop-shadow(0 0 13px #ff557c)!important}
+#introScene .cw-heli-body{position:absolute;left:19%;top:37%;width:57%;height:34%;background:linear-gradient(180deg,#b8d8ef,#526b91 42%,#182b4d 100%);border:2px solid #a8f7ff;clip-path:polygon(0 35%,18% 0,78% 0,100% 38%,86% 100%,17% 100%);box-shadow:0 0 12px #31eaff}
+#introScene .cw-heli-cockpit{position:absolute;left:62%;top:42%;width:20%;height:20%;background:linear-gradient(135deg,#e9ffff,#35c8e8 55%,#126080);border:2px solid #d9ffff;clip-path:polygon(0 0,100% 20%,76% 100%,0 100%)}
+#introScene .cw-heli-tail{position:absolute;left:0;top:47%;width:27%;height:8%;background:#718bab;border:1px solid #b4faff;clip-path:polygon(0 35%,100% 0,100% 100%,0 70%)}
+#introScene .cw-heli-rotor{position:absolute;left:38%;top:12%;width:43%;height:5px;background:#d9ffff;box-shadow:0 0 8px #31eaff;transform:rotate(-4deg);transform-origin:left center}
+#introScene .cw-heli-rotor:before{content:"";position:absolute;left:42%;top:-8px;width:5px;height:21px;background:#8dfbff;box-shadow:0 0 7px #31eaff}
+#introScene .cw-heli-light{position:absolute;left:45%;top:70%;width:8px;height:5px;border-radius:50%;background:#ff466f;box-shadow:0 0 10px 4px #ff315f}
+
 /* NOVACORE WORLD-WIDE VISUAL POLISH PASS — presentation only; gameplay logic unchanged */
 :root{--cw-cyan:#67f4ff;--cw-pink:#ff62cf;--cw-gold:#ffe28a;--cw-panel:#0b1930}
 header{width:min(1120px,100%);padding:16px 20px 10px;gap:14px}
@@ -1664,9 +1678,9 @@ footer{width:min(1120px,100%);font-size:12px}
       <div class="cw-city-reflection"></div>
       <div class="cw-searchlight cw-searchlight-a"></div>
       <div class="cw-searchlight cw-searchlight-b"></div>
-      <div class="cw-carrier cw-carrier-a">🛸</div>
-      <div class="cw-carrier cw-carrier-b">🛸</div>
-      <div class="cw-dropship">🚁</div>
+      <div class="cw-carrier cw-carrier-a" aria-label="Futuristic alien spacecraft"><span class="cw-carrier-hull"></span><span class="cw-carrier-core"></span><span class="cw-carrier-thruster"></span></div>
+      <div class="cw-carrier cw-carrier-b" aria-label="Futuristic alien spacecraft"><span class="cw-carrier-hull"></span><span class="cw-carrier-core"></span><span class="cw-carrier-thruster"></span></div>
+      <div class="cw-dropship" aria-label="Futuristic military helicopter"><span class="cw-heli-rotor"></span><span class="cw-heli-body"></span><span class="cw-heli-cockpit"></span><span class="cw-heli-tail"></span><span class="cw-heli-light"></span></div>
       <div class="cw-blast cw-blast-a"></div>
       <div class="cw-blast cw-blast-b"></div>
       <div class="cw-ground-flash"></div>
