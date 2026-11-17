@@ -110,6 +110,9 @@
     box-shadow: 0 0 0 2px #f04aa8;
   }
   .character small { color: #b7ff6a; }
+  .maguire-card { border-color:#ffcf4a !important; background:linear-gradient(145deg,#38204f,#17102c) !important; box-shadow:0 0 12px #ffcf4a55,3px 3px 0 #08030f !important; }
+  .maguire-card .emoji { filter:drop-shadow(0 0 7px #ffcf4a); }
+  .maguire-card.selected { border-color:#fff1a8 !important; box-shadow:0 0 0 2px #ffcf4a,0 0 22px #ffcf4a99 !important; }
   #selectionInfo { color: #b7ff6a; }
   .mobile button { background: #3b1d61; color: #f8f0b4; border: 2px solid #b7ff6a; }
   @media (max-width:520px) {
@@ -1632,6 +1635,7 @@ footer{width:min(1120px,100%);font-size:12px}
         <button class="character" data-character="monkey"><span class="emoji">🐵</span>Robo Monkey<small>Pulse blaster</small></button>
         <button class="character" data-character="deer"><span class="emoji">🦌</span>Neon Stag<small>Pulse blaster</small></button>
         <button class="character" data-character="alien"><span class="emoji">👽</span>Alien Glitch<small>Pulse blaster</small></button>
+        <button class="character maguire-card" data-character="maguire"><span class="emoji">🐱</span>MAGUIRE ★<small>Hairball Launcher • Sticky Burst</small></button>
       </div>
       <div id="selectionInfo">🐱 Cyber Cat selected — Pulse Blaster</div>
       <p><b>PLAYER 1:</b> Move WASD · Shoot F (or mouse click) · <b>PLAYER 2:</b> Move arrow keys · Shoot Enter · <b>TEAM:</b> collect the purple NOVA power-up and defeat the TITAN CORE together!</p>
@@ -1820,7 +1824,8 @@ const characterData={
  penguin:{name:'Frostbyte Penguin',emoji:'🐧',fur:'#c8d9e8',accent:'#69eaff',weapon:'Pulse Blaster',damage:25},
  monkey:{name:'Robo Monkey',emoji:'🐵',fur:'#b9875d',accent:'#ffe078',weapon:'Pulse Blaster',damage:25},
  deer:{name:'Neon Stag',emoji:'🦌',fur:'#c89a72',accent:'#b7ff6a',weapon:'Pulse Blaster',damage:25},
- alien:{name:'Alien Glitch',emoji:'👽',fur:'#a6ed82',accent:'#d56cff',weapon:'Pulse Blaster',damage:25}
+ alien:{name:'Alien Glitch',emoji:'👽',fur:'#a6ed82',accent:'#d56cff',weapon:'Pulse Blaster',damage:25},
+ maguire:{name:'Maguire',emoji:'🐱',fur:'#d8a7ff',accent:'#ffcf4a',weapon:'MEGA HAIRBALL LAUNCHER',damage:46}
 };
 let selectedCharacter='cat';
 const selectionInfo=document.getElementById('selectionInfo');
@@ -1828,7 +1833,7 @@ document.querySelectorAll('.character').forEach(btn=>btn.addEventListener('click
  selectedCharacter=btn.dataset.character;
  document.querySelectorAll('.character').forEach(b=>b.classList.toggle('selected',b===btn));
  const c=characterData[selectedCharacter];
- selectionInfo.textContent=c.emoji+' '+c.name+' selected — '+c.weapon+(selectedCharacter==='human'?' • powerful special shots':selectedCharacter==='chromeRiot'?' • silver cyber-arm + sonic blasts':'');
+ selectionInfo.textContent=c.emoji+' '+c.name+' selected — '+c.weapon+(selectedCharacter==='human'?' • powerful special shots':selectedCharacter==='chromeRiot'?' • silver cyber-arm + sonic blasts':selectedCharacter==='maguire'?' • sticky splash damage + golden pounce shield':'');
 }));
 let mouse={x:W/2+100,y:H/2,down:false};
 const rand=(a,b)=>a+Math.random()*(b-a);
@@ -2344,10 +2349,16 @@ function end(win){
  startBtn.textContent=gameMode==='arcade'?'RETRY ARCADE RUN ↻':'PLAY AGAIN';
 }
 function fireFor(shooter,owner){
-  const human=shooter.character==='human',rocker=shooter.character==='chromeRiot',a=shooter.angle;
-  bullets.push({x:shooter.x+Math.cos(a)*25,y:shooter.y+Math.sin(a)*25,vx:Math.cos(a)*(human?490:rocker?540:610),vy:Math.sin(a)*(human?490:rocker?540:610),r:human?8:rocker?7:5,life:1.15,blaster:true,special:human||rocker,damage:characterData[shooter.character].damage,owner});
-  shooter.ammo--;shooter.cool=.18;
+  const human=shooter.character==='human',rocker=shooter.character==='chromeRiot',maguire=shooter.character==='maguire',a=shooter.angle;
+  const speed=maguire?390:human?490:rocker?540:610;
+  bullets.push({x:shooter.x+Math.cos(a)*25,y:shooter.y+Math.sin(a)*25,vx:Math.cos(a)*speed,vy:Math.sin(a)*speed,r:maguire?11:human?8:rocker?7:5,life:1.35,blaster:!maguire,hairball:maguire,special:human||rocker||maguire,damage:characterData[shooter.character].damage,owner});
+  shooter.ammo--;shooter.cool=maguire?.48:.18;
  }
+function cwHairballSplash(x,y,directTarget){
+ for(const bot of bots)if(bot!==directTarget&&bot.hp>0&&Math.hypot(bot.x-x,bot.y-y)<76){bot.hp-=20;bot.flash=.16;}
+ if(boss&&boss!==directTarget&&Math.hypot(boss.x-x,boss.y-y)<boss.r+58){boss.hp-=20;boss.flash=.16;if(boss.hp<=0)defeatBoss();}
+ cwBurst(x,y,'#ffcf4a',15,115);cwText(x,y-20,'STICKY BURST!','#ffdf72');
+}
 function update(dt){
  if(!running)return;
  if(factoryPhase==='exploding'){factoryBlastTimer+=dt;if(factoryBlastTimer>=5){factoryPhase='done';end(true);}return;}
@@ -2513,8 +2524,8 @@ function update(dt){
      }
     }
    }
-   if(!hit)for(const bot of bots){if(bot.hp>0&&dist(b,bot)<bot.r+b.r){b.life=0;bot.hp-=(b.damage||25);bot.flash=.12;hit=true;break;}}
-   if(!hit&&boss&&dist(b,boss)<boss.r+b.r){b.life=0;boss.hp-=(b.damage||25);boss.flash=.12;if(boss.hp<=0)defeatBoss();updateHud();}
+   if(!hit)for(const bot of bots){if(bot.hp>0&&dist(b,bot)<bot.r+b.r){b.life=0;bot.hp-=(b.damage||25);bot.flash=.12;hit=true;if(b.hairball)cwHairballSplash(b.x,b.y,bot);break;}}
+   if(!hit&&boss&&dist(b,boss)<boss.r+b.r){b.life=0;boss.hp-=(b.damage||25);boss.flash=.12;if(b.hairball)cwHairballSplash(b.x,b.y,boss);if(boss&&boss.hp<=0)defeatBoss();updateHud();}
    if(!hit&&factoryPhase==='machines'){
     for(const machine of factoryMachines){
      if(!machine.destroyed&&dist(b,machine)<machine.r+b.r){
@@ -2703,7 +2714,11 @@ function draw(){
  }
  // bullets
  for(const b of bullets){
-  if(b.blaster && !b.enemy){
+  if(b.hairball){
+   ctx.save();ctx.shadowBlur=13;ctx.shadowColor='#ffcf4a';ctx.fillStyle='#f5e8cf';ctx.strokeStyle='#ffcf4a';ctx.lineWidth=2;
+   ctx.beginPath();ctx.arc(b.x,b.y,b.r,0,Math.PI*2);ctx.fill();ctx.stroke();
+   ctx.fillStyle='#c69a73';ctx.beginPath();ctx.arc(b.x-3,b.y-2,3,0,Math.PI*2);ctx.arc(b.x+4,b.y+3,2,0,Math.PI*2);ctx.fill();ctx.restore();
+  } else if(b.blaster && !b.enemy){
    ctx.save();ctx.shadowBlur=0;ctx.shadowColor=b.special?'#ff36d7':'#31eaff';ctx.strokeStyle=b.special?'#ffb5f1':'#8df7ff';ctx.lineWidth=b.special?9:5;ctx.lineCap='round';
    ctx.beginPath();ctx.moveTo(b.x-b.vx*.025,b.y-b.vy*.025);ctx.lineTo(b.x+b.vx*.012,b.y+b.vy*.012);ctx.stroke();
    ctx.fillStyle='#ffffff';ctx.beginPath();ctx.arc(b.x,b.y,b.special?4:2.5,0,Math.PI*2);ctx.fill();ctx.restore();
@@ -3036,6 +3051,10 @@ function draw(){
    ctx.fillStyle='#303b62';ctx.strokeStyle='#ff36d7';ctx.lineWidth=2;ctx.fillRect(4,-8,27,16);ctx.strokeRect(4,-8,27,16);
    ctx.fillStyle='#ff36d7';ctx.fillRect(10,-4,14,8);ctx.fillStyle='#ffffff';ctx.fillRect(29,-4,8,8);
    ctx.fillStyle='#31eaff';ctx.fillRect(14,-2,10,4);
+  }else if(player.character==='maguire'){
+   ctx.fillStyle='#3b2458';ctx.strokeStyle='#ffcf4a';ctx.lineWidth=2.5;ctx.fillRect(3,-10,31,20);ctx.strokeRect(3,-10,31,20);
+   ctx.fillStyle='#ffcf4a';ctx.fillRect(8,-6,15,12);ctx.fillStyle='#f5e8cf';ctx.beginPath();ctx.arc(29,0,7,0,Math.PI*2);ctx.fill();ctx.stroke();
+   ctx.fillStyle='#8c5bb5';ctx.fillRect(13,-3,10,6);
   }else if(rocker){
    // Guitar-shaped feedback blaster.
    ctx.fillStyle='#252b3c';ctx.strokeStyle='#d7e4f5';ctx.lineWidth=2;
