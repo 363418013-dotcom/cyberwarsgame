@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 600" role="img" aria-labelledby="title desc">
+<title id="title">Cyber Wars — Neon City cover art</title><desc id="desc">A futuristic neon city under attack, with a heroic armored fighter and flying spacecraft.</desc>
+<defs>
+ <linearGradient id="sky" x2="0" y2="1"><stop stop-color="#07132f"/><stop offset=".55" stop-color="#24104a"/><stop offset="1" stop-color="#080719"/></linearGradient>
+ <linearGradient id="city" x2="0" y2="1"><stop stop-color="#163d72"/><stop offset="1" stop-color="#090d28"/></linearGradient>
+ <linearGradient id="armor" x2="1" y2="1"><stop stop-color="#b9faff"/><stop offset=".45" stop-color="#2878b9"/><stop offset="1" stop-color="#101b48"/></linearGradient>
+ <linearGradient id="beam"><stop stop-color="#22eaff" stop-opacity="0"/><stop offset=".5" stop-color="#22eaff" stop-opacity=".75"/><stop offset="1" stop-color="#22eaff" stop-opacity="0"/></linearGradient>
+ <filter id="glow"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<rect width="1600" height="600" fill="url(#sky)"/>
+<g fill="#d8f8ff" opacity=".8"><circle cx="90" cy="72" r="2"/><circle cx="260" cy="115" r="2"/><circle cx="480" cy="55" r="2"/><circle cx="710" cy="92" r="2"/><circle cx="1010" cy="60" r="2"/><circle cx="1320" cy="105" r="2"/><circle cx="1510" cy="48" r="2"/><circle cx="1180" cy="175" r="2"/></g>
+<path d="M0 360 L120 295 235 350 350 250 470 355 590 280 700 350 820 235 930 340 1050 270 1180 350 1300 245 1420 330 1600 250 V600 H0Z" fill="#10183c" opacity=".8"/>
+<g fill="url(#city)" stroke="#238bd1" stroke-width="3">
+<path d="M0 390h120v-100h45v-55h90v155h70v-90h80v-70h80v160h65v-120h90v-85h75v205h80v-125h75v-90h90v215h75v-130h70v-80h100v210h80v-115h90v-75h70v190h95v-140h90v-75h85v215h85v210H0Z"/>
+</g>
+<g fill="#35eaff" opacity=".8"><path d="M135 310h9v35h-9zm65-48h10v44h-10zm177 72h9v33h-9zm90-65h9v48h-9zm270-12h10v42h-10zm160 20h10v42h-10zm180-5h10v45h-10zm185 2h10v43h-10zm145 28h10v35h-10z"/></g>
+<g fill="#f04aa8" opacity=".8"><path d="M285 340h8v25h-8zm245-30h8v25h-8zm350-20h8v25h-8zm300 24h8v25h-8zm230-35h8v25h-8z"/></g>
+<path d="M0 465H1600" stroke="#27dfff" stroke-width="3" opacity=".55" filter="url(#glow)"/>
+<!-- distant spacecraft -->
+<g transform="translate(1080 155)" filter="url(#glow)"><path d="M-130 5L-50-18 35-10 120 18 35 30-55 22Z" fill="#243d72" stroke="#54eaff" stroke-width="3"/><path d="M-50-18L-20-65 15-13M25 27L70 68 32 28" fill="#19244e" stroke="#f04aa8" stroke-width="3"/><path d="M-120 7h-65l35 16h35" fill="#37eaff"/><circle cx="8" cy="8" r="8" fill="#b7ff6a"/></g>
+<path d="M1020 195L820 410 1140 215" fill="url(#beam)" opacity=".45"/>
+<!-- hero silhouette and armor -->
+<g transform="translate(1270 300)" filter="url(#glow)">
+<path d="M-90 255L-82 105-48 35-8 12 43 30 78 110 105 255Z" fill="#10152f" stroke="#33dfff" stroke-width="5"/>
+<path d="M-55 80L-72 165-122 225-103 244-35 190-10 120M65 85L105 150 160 185 148 207 80 180 38 125" fill="url(#armor)" stroke="#5deaff" stroke-width="6"/>
+<path d="M-52 42L-43-18-5-55 42-30 55 30 25 68-30 68Z" fill="url(#armor)" stroke="#8ff8ff" stroke-width="6"/>
+<path d="M-34 13L-10 3 28 12 40 30 5 43-34 30Z" fill="#09152f" stroke="#f04aa8" stroke-width="4"/>
+<path d="M-34 115L-8 90 35 105 55 185 15 218-40 195Z" fill="#18386d" stroke="#31eaff" stroke-width="5"/>
+<path d="M-28 135L28 133" stroke="#b7ff6a" stroke-width="7"/>
+<path d="M-70 245L-105 320H-48L-10 250M35 245L50 320H110L82 245" fill="#10152f" stroke="#4bdfff" stroke-width="5"/>
+</g>
+<!-- foreground energy streaks -->
+<g stroke-width="5" filter="url(#glow)"><path d="M0 525H570" stroke="#27dfff"/><path d="M1050 490H1600" stroke="#f04aa8"/><path d="M170 565H430" stroke="#b7ff6a"/></g>
+<g font-family="Courier New,monospace" font-weight="900"><text x="72" y="190" font-size="94" letter-spacing="8" fill="#dffcff" stroke="#177ec0" stroke-width="3" paint-order="stroke" filter="url(#glow)">CYBER</text><text x="72" y="292" font-size="112" letter-spacing="5" fill="#b7ff6a" stroke="#f04aa8" stroke-width="4" paint-order="stroke" filter="url(#glow)">WARS</text><text x="82" y="337" font-size="24" letter-spacing="7" fill="#d6faff">THE CITY NEEDS A HERO</text></g>
+<rect x="14" y="14" width="1572" height="572" fill="none" stroke="#3ceaff" stroke-width="3" opacity=".55"/>
+</svg>
